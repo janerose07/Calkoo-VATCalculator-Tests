@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="5.177" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="VAT Calculator Functionality" name="Verify tax rates are displayed based on selected country - Example #1.1" time="5.064">
+<system-out><![CDATA[
+Given User navigate to the VAT calculator page..............................passed
+When User selects "Portugal" as the country.................................passed
+Then User should see "6,13,23" as available tax rates.......................passed
+]]></system-out>
+</testcase>
+</testsuite>
