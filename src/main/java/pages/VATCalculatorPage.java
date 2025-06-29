@@ -16,19 +16,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WebDriverManager;
 
 public class VATCalculatorPage {
-    
+
     private WebDriver driver;
     private WebDriverWait wait;
-    
+
     @FindBy(name = "Country")
     private WebElement countryDropdown;
-    
+
     @FindBy(id = "NetPrice")
     private WebElement netAmountField;
-    
+
     @FindBy(id = "Price")
     private WebElement grossAmountField;
-    
+
     @FindBy(id = "VATsum")
     private WebElement vatAmountField;
 
@@ -38,15 +38,12 @@ public class VATCalculatorPage {
     @FindBy(xpath = "//button[@aria-label='Consent']")
     private WebElement consentButton;
 
-     
-  
     public VATCalculatorPage() {
         this.driver = WebDriverManager.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
-    
-   
+
     public void navigateToVATCalculator() {
         driver.get(utils.ConfigReader.getBaseUrl());
         handleCookieConsent();
@@ -63,37 +60,35 @@ public class VATCalculatorPage {
             System.out.println("Cookie consent not found or already accepted.");
         }
     }
-    
+
     public void selectCountry(String country) {
         wait.until(ExpectedConditions.elementToBeClickable(countryDropdown));
         Select countrySelect = new Select(countryDropdown);
         countrySelect.selectByVisibleText(country);
     }
-    
-    
-    public void enterNetAmount(String amount)  {
+
+    public void enterNetAmount(String amount) {
         wait.until(ExpectedConditions.elementToBeClickable(netAmountField));
         netAmountField.clear();
         netAmountField.sendKeys(amount);
     }
-    
-    
+
     public String getGrossAmount() {
         wait.until(ExpectedConditions.visibilityOf(grossAmountField));
         return grossAmountField.getAttribute("value");
     }
-    
+
     public String getVATAmount() {
         wait.until(ExpectedConditions.visibilityOf(vatAmountField));
         return vatAmountField.getAttribute("value");
     }
-    
+
     public List<String> getAvailableTaxRates() {
-    List<WebElement> vatElements = driver.findElements(By.xpath("//input[@type='radio' and @name='VAT']"));
-    List<String> vatRates = new ArrayList<>();
-    for (WebElement element : vatElements) {
-        vatRates.add(element.getAttribute("value"));
-    }
-    return vatRates;
+        List<WebElement> vatElements = driver.findElements(By.xpath("//input[@type='radio' and @name='VAT']"));
+        List<String> vatRates = new ArrayList<>();
+        for (WebElement element : vatElements) {
+            vatRates.add(element.getAttribute("value"));
+        }
+        return vatRates;
     }
 }

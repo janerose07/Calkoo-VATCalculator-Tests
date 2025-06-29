@@ -12,18 +12,18 @@ import io.cucumber.java.en.When;
 import pages.VATCalculatorPage;
 
 public class VATCalculatorSteps {
-    
+
     private VATCalculatorPage vatCalculatorPage;
-    
+
     public VATCalculatorSteps() {
         this.vatCalculatorPage = new VATCalculatorPage();
     }
-    
+
     @Given("User navigate to the VAT calculator page")
     public void navigateToVATCaclculatorUrl() {
         vatCalculatorPage.navigateToVATCalculator();
     }
-    
+
     @When("User selects {string} as the country")
     public void userSelectsCountry(String country) {
         vatCalculatorPage.selectCountry(country);
@@ -36,24 +36,22 @@ public class VATCalculatorSteps {
         Assert.assertTrue(actual.containsAll(expected));
     }
 
-    
     @And("User enters {string} as the net amount")
     public void userEntersNetAmount(String amount) throws InterruptedException {
         vatCalculatorPage.enterNetAmount(amount);
     }
-    
-    
+
     @Then("the gross amount should be calculated as {string}")
     public void grossAmountCalculation(String expectedAmount) {
         String actualAmount = vatCalculatorPage.getGrossAmount();
-        Assert.assertEquals(actualAmount, expectedAmount, 
-            "Gross amount calculation is incorrect");
+        Assert.assertEquals(actualAmount, expectedAmount,
+                "Gross amount calculation is incorrect");
     }
-    
+
     @And("the VAT amount should be calculated as {string}")
     public void vatAmountCalculation(String expectedAmount) {
         String actualAmount = vatCalculatorPage.getVATAmount();
-        Assert.assertEquals(actualAmount, expectedAmount, 
-            "VAT amount calculation is incorrect");
-    }    
+        Assert.assertEquals(actualAmount, expectedAmount,
+                "VAT amount calculation is incorrect");
+    }
 }

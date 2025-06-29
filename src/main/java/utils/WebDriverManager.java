@@ -11,9 +11,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class WebDriverManager {
-    
+
     private static WebDriver driver;
-    
+
     public static void initializeDriver() {
         if (driver == null) {
             String browser = ConfigReader.getBrowser().toLowerCase();
@@ -24,36 +24,37 @@ public class WebDriverManager {
                         chromeOptions.addArguments("--headless");
                     }
                     driver = new ChromeDriver(chromeOptions);
-                    break; 
+                    break;
                 case "firefox":
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
                     if (ConfigReader.isHeadless()) {
                         firefoxOptions.addArguments("--headless");
                     }
                     driver = new FirefoxDriver(firefoxOptions);
-                    break;    
+                    break;
                 case "edge":
                     EdgeOptions edgeOptions = new EdgeOptions();
                     if (ConfigReader.isHeadless()) {
                         edgeOptions.addArguments("--headless");
                     }
                     driver = new EdgeDriver(edgeOptions);
-                    break;     
+                    break;
                 default:
-                    throw new IllegalArgumentException("Browser not supported: " + browser + ". Supported browsers: chrome, firefox, edge");
+                    throw new IllegalArgumentException(
+                            "Browser not supported: " + browser + ". Supported browsers: chrome, firefox, edge");
             }
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         }
     }
-    
+
     public static WebDriver getDriver() {
         if (driver == null) {
             initializeDriver();
         }
         return driver;
     }
-    
+
     public static void quitDriver() {
         if (driver != null) {
             driver.quit();
